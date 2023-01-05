@@ -59,12 +59,24 @@
   </head>
   <body>
     <h2>Products</h2>
-    <div id="products"><br>Loading...</div>
-    <%
-=begin%>
- <div id="varients"><br>Loading Varients...</div>
-<%
-=end%>
+    <div style="display: none" id="products"><br>Loading...</div>
+
+    <%@products.each do |product|%>
+      <h1><%= product.title%></h1>
+      <table>
+      <tr>
+      <th>Size</th><th>color</th><th>Price</th>
+      </tr>
+      <%product.variants.each do |variant|%>
+        <tr>
+        <td><%= variant.option1%></td>
+        <td><%= variant.option2%></td>
+        <td><%= variant.price%></td>
+        </tr>
+      <%end%>
+      </table>
+    <%end%>
+</table>
 
     <h2>Webhooks</h2>
 
