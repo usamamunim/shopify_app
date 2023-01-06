@@ -14,6 +14,15 @@ class HomeController < ApplicationController
     end
   end
 
+  def edit
+    @shop.with_shopify_session do
+      @products = ShopifyAPI::Product.all
+     end
+    # @shop.with_shopify_session do
+    #   @products = ShopifyAPI::Product.all
+    #  end
+  end
+
 
   private
 

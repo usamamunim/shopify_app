@@ -1,0 +1,21 @@
+<br/><br/>
+<div class="container">
+<h3><b><i>If you don't want update any field, don't change it</i></b></h3>
+<br/><br/>
+<%= form_with modal: @product, url: product_path(@product.id), method: :patch do |f| %>
+  <div class="form-group">
+    <%= f.label :Product_title%>
+    <%= f.text_field "title" , class: "form-control", value: @product.title%>
+  </div>
+  <div class="form-group">
+    <%@product.variants.each do |variant|%>
+      <%= f.label variant.option1%>
+      <%= f.label variant.option2%>
+      <%= f.text_field  variant.id, class: "form-control", placeholder: "Enter new price", value: variant.price%>
+      <br/><br/>
+    <%end%>
+  </div>
+
+  <%= f.submit "Change Product Details"%>
+<% end %>
+<div class="container">

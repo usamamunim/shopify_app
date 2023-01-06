@@ -25,41 +25,78 @@
           });
         });
 
-        var fetchProducts = function() {
-          var headers = new Headers({ "Authorization": "Bearer " + window.sessionToken });
-          return fetch("/products", { headers })
-            .then(response => response.json())
-            .then(data => {
-              var products = data.products;
+        // var fetchProducts = function() {
+        //   var headers = new Headers({ "Authorization": "Bearer " + window.sessionToken });
+        //   return fetch("/products", { headers })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //       var products = data.products;
 
-              if (products === undefined || products.length == 0) {
-                document.getElementById("products").innerHTML = "<br>No products to display.";
-              } else {
-                var list = "";
-                var listVarients = "";
+        //       if (products === undefined || products.length == 0) {
+        //         document.getElementById("products").innerHTML = "<br>No products to display.";
+        //       } else {
+        //         var list = "";
+        //         var listVarients = "";
 
-                products.forEach((product) => {
-                  var link = `<a target="_top" href="https://<%= @shop_origin %>/admin/products/${product.id}">`
-                  list += "<li>" + link + product.title + "</a></li>";
-                  listVarients += "<li>" + product.title + "</li>";
-                });
+        //         products.forEach((product) => {
+        //           var link = `<a target="_top" href="https://<%= @shop_origin %>/admin/products/${product.id}">`
+        //           list += "<li>" + link + product.title + "</a></li>";
+        //           listVarients += "<li>" + product.title + "</li>";
+        //         });
 
 
-                document.getElementById("products").innerHTML = "<ul>" + list + "</ul>";
-                document.getElementById("variants").innerHTML = "<ul>" + listVarients + "</ul>";
+        //         document.getElementById("products").innerHTML = "<ul>" + list + "</ul>";
+        //         document.getElementById("variants").innerHTML = "<ul>" + listVarients + "</ul>";
 
-              }
-            });
-        }();
+        //       }
+        //     });
+        // }();
       });
     </script>
   </head>
   <body>
-    <h2>Products Index page</h2>
-    <div id="products"><br>Loading...</div>
-    <div id="variants"><br>Loading variants...</div>
+    <h2 style="display: none">Products</h2>
+    <div style="display: none" id="products"><br>Loading...</div>
+    <div class="container">
+    <br/><br/>
+      <%@products.each do |product|%>
+        <h1 class="h2 text-primary" ><%= product.title%></h1>
+        <table class="table shadow-lg p-3 mb-5 bg-white rounded table-striped">
+        <tr class="table-primary">
+        <th>Size</th><th>color</th><th>Price</th>
+        </tr>
+        <%product.variants.each do |variant|%>
+          <tr>
+          <td><%= variant.option1%></td>
+          <td><%= variant.option2%></td>
+          <td><%= variant.price%></td>
+          </tr>
+        <%end%>
+        </table>
+    <%= link_to "Edit", edit_product_path(product.id), class: "btn btn-primary btn-lg" %>
+        <%
+=begin%>
+ <button onClick="openForm()" class="btn btn-primary btn-lg">Edit</button>
+<%
+=end%>
+        <br/><br/><br/>
+      <%end%>
 
-    <h2>Webhooks</h2>
+      <div style="display: none" id="form">
+          <%
+=begin%>
+ <%= form_for :anything, url: "my_controller/my_action" do |form| %>
+
+          <%= form.text_field :name %>
+          <%= form.submit  %>
+          <% end  %>
+<%
+=end%>
+      </div>
+      <br/><br/>
+    </div>
+
+    <h2 style="display: none">Webhooks</h2>
 
     <% if @webhooks.present? %>
     <ul>
@@ -68,7 +105,7 @@
       <% end %>
     </ul>
     <% else %>
-    <p>This app has not created any webhooks for this Shop. Add webhooks to your ShopifyApp initializer if you need webhooks</p>
+    <p style="display: none">This app has not created any webhooks for this Shop. Add webhooks to your ShopifyApp initializer if you need webhooks</p>
     <% end %>
   </body>
 </html>

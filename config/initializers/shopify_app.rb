@@ -3,7 +3,7 @@ ShopifyApp.configure do |config|
   config.old_secret = ""
   config.scope = "write_script_tags,write_inventory,write_assigned_fulfillment_orders,write_orders,write_products,read_customers,write_customers,write_themes,write_fulfillments,write_price_rules" # Consult this page for more scope options:
                                   # https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
-  config.embedded_app = true
+  config.embedded_app = false
   config.after_authenticate_job = false
   config.api_version = "2022-04"
   config.shop_session_repository = 'Shop'

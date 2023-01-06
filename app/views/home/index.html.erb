@@ -8,6 +8,9 @@
       href="https://unpkg.com/@shopify/polaris@4.25.0/styles.min.css"
       />
     <script>
+      function openForm(){
+        document.getElementById("form").style.display = "";
+      }
       document.addEventListener("DOMContentLoaded", async function() {
 
 
@@ -58,28 +61,13 @@
     </script>
   </head>
   <body>
-    <h2>Products</h2>
-    <div style="display: none" id="products"><br>Loading...</div>
 
-    <%@products.each do |product|%>
-      <h1><%= product.title%></h1>
-      <table>
-      <tr>
-      <th>Size</th><th>color</th><th>Price</th>
-      </tr>
-      <%product.variants.each do |variant|%>
-        <tr>
-        <td><%= variant.option1%></td>
-        <td><%= variant.option2%></td>
-        <td><%= variant.price%></td>
-        </tr>
-      <%end%>
-      </table>
-    <%end%>
-</table>
-
-    <h2>Webhooks</h2>
-
+  <%= link_to "Show Products", products_path, class: "btn btn-secondary" %>
+  <%
+=begin%>
+ <%= link_to "Edit", edit_product_path(@products[0].id), class: "btn btn-secondary" %>
+<%
+=end%>
     <% if @webhooks.present? %>
     <ul>
       <% @webhooks.each do |webhook| %>
@@ -87,7 +75,7 @@
       <% end %>
     </ul>
     <% else %>
-    <p>This app has not created any webhooks for this Shop. Add webhooks to your ShopifyApp initializer if you need webhooks</p>
+    <p style="display: none">This app has not created any webhooks for this Shop. Add webhooks to your ShopifyApp initializer if you need webhooks</p>
     <% end %>
   </body>
 </html>
