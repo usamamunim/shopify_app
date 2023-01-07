@@ -1,25 +1,38 @@
-<br/><br/>
+<br/>
 <div class="container">
-<h3><b><i>If you don't want update any field, don't change it</i></b></h3>
-<br/><br/>
+<h4 class="text-danger"><b><i>If you don't want update any field, don't change it</i></b></h4>
+<br/>
+<div class="jumbotron">
 <%= form_with modal: @product, url: product_path(@product.id), method: :patch do |f| %>
   <div class="form-group">
-    <%= f.label :Product_title%>
+    <%= f.label :Product_title, class: "text-secondary"%>
     <%= f.text_field "title" , class: "form-control", value: @product.title%>
   </div>
-  <div class="form-group">
+  <div class="row">
+    <%counter=1%>
     <%@product.variants.each do |variant|%>
-      <b><%= f.label :variant_detail%></b><br/>
-      <%= f.label :Size%>
+      <br/>
+      <div class="col-md-12">
+      <%= f.label "Variant #{counter}"%>
+      <% counter+=1%>
+      </div>
+      <div class="col-md-4">
+      <%= f.label :Size, class: "text-secondary"%>
       <%= f.text_field  "#{variant.id}_size", class: "form-control", placeholder: "Enter new price", value: variant.option1%>
-      <%= f.label :Color%>
+      </div>
+      <div class="col-md-4">
+      <%= f.label :Color, class: "text-secondary"%>
       <%= f.text_field  "#{variant.id}_color", class: "form-control", placeholder: "Enter new price", value: variant.option2%>
-      <%= f.label :Price%>
+      </div>
+      <div class="col-md-4">
+      <%= f.label :Price, class: "text-secondary"%>
       <%= f.text_field  "#{variant.id}_price", class: "form-control", placeholder: "Enter new price", value: variant.price%>
-      <br/><br/>
+      <br/>
+      </div>
     <%end%>
   </div>
-
-  <%= f.submit "Change Product Details"%>
+  <%= f.submit "Change Product Details", class: "btn-primary"%>
+  <br/><br/>
 <% end %>
+</div>
 <div class="container">
