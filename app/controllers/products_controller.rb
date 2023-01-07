@@ -23,9 +23,16 @@ class ProductsController < AuthenticatedController
         @product.title = params[:title]
       end
       for variant in @product.variants do
-        variant.price = params["#{variant.id}"]
+        new_size = params["#{variant.id}_size"].split('_')[0]
+        new_color = params["#{variant.id}_color"].split('_')[0]
+        new_price = params["#{variant.id}_price"].split('_')[0]
+        variant.option1 = new_size
+        variant.option2 = new_color
+        variant.price = new_price
       end
-      @product.save
+      if @product.save
+        redirect_to products_path, flash: {message:"Product updated"}
+      end
      end
   end
   private
